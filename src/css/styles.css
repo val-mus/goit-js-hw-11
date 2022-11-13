@@ -35,10 +35,11 @@ button {
 
 .gallery {
 
-    width: 100vw;
     display: flex;
     flex-wrap: wrap;
+
     gap:30px;
+
     align-items: center;
     justify-content: center;
    
@@ -46,20 +47,22 @@ button {
 
 .photo-card{
 
-
     height: 300px;
     display: flex;
 
     flex-direction: column;
     padding: 5px;
 
-    border: 1px black solid;
+   
    
 
 }.info{
+
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 .info-item{
@@ -68,4 +71,6 @@ button {
 
 .photo-card__img{
     height: 70%;
+    width: auto;
+    margin-bottom: 10px;
 }
