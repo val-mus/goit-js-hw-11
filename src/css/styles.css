@@ -1,7 +1,4 @@
-p {
-    font-size: 45px;
-    color: green;
-}
+
 
 
 .search-form{
@@ -14,8 +11,9 @@ p {
 }
 
 input {
-    width: 400px;
-    border-radius: 30px;
+    width:50%;
+    height: 30px;
+    border-radius: 15px;
     margin-bottom: 10px;
     border-color:  rgba(0,22,255,1);
 }
@@ -33,4 +31,41 @@ button {
     font-weight: bold;
 
     text-align: center;
+}
+
+.gallery {
+
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    gap:30px;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+.photo-card{
+
+
+    height: 300px;
+    display: flex;
+
+    flex-direction: column;
+    padding: 5px;
+
+    border: 1px black solid;
+   
+
+}.info{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.info-item{
+    display: block;
+}
+
+.photo-card__img{
+    height: 70%;
 }

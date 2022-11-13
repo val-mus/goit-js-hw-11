@@ -12,8 +12,43 @@ form.addEventListener('submit', onSubmitClick);
 
 function onSubmitClick(e) {
   e.preventDefault();
+  document.querySelector('.gallery').innerHTML = '';
   searchQuery = e.currentTarget.elements.searchQuery.value;
-  return fetchFromUser(searchQuery);
+
+  fetchFromUser(searchQuery).then(data => {
+    console.log(data);
+    const markup = data
+      .map(item => {
+        const {
+          webformatURL,
+          tags,
+          likes,
+          largeImageURL,
+          views,
+          comments,
+          downloads,
+        } = item;
+        return `<div class="photo-card">
+        <img src="${webformatURL}" alt="${tags}" loading="lazy" class="photo-card__img"/>
+        <div class="info">
+        <p class="info-item">
+            <b>Likes: ${likes} </b>
+        </p>
+        <p class="info-item">
+          <b>Views: ${views}</b>
+        </p>
+        <p class="info-item">
+          <b>Comments: ${comments}</b>
+        </p>
+        <p class="info-item">
+          <b>Downloads: ${downloads}</b>
+        </p>
+        </div>
+        </div>`;
+      })
+      .join('');
+    document.querySelector('.gallery').insertAdjacentHTML('beforeend', markup);
+  });
 }
 
 function fetchFromUser(searchQuery) {
@@ -35,17 +70,11 @@ function fetchFromUser(searchQuery) {
       Notiflix.Notify.info(`"Hooray! We found ${result.totalHits} images." `);
       return result.hits;
     })
-    .then(r => {
-      console.log(r);
+    .then(hits => {
+      console.log(hits);
+      return hits;
     });
 }
-
-// fetchFromUser()
-//   .then(res => res.json()).then(data => console.log(data))
-
-// fetchFromUser('cat');
-// fetchFromUser('dog');
-// fetchFromUser('sun');
 
 function makeCardElement(element) {
   const cardMarkup = `<div class="photo-card">
@@ -69,3 +98,11 @@ function makeCardElement(element) {
     .querySelector('.gallery')
     .insertAdjacentElement('beforeend', cardMarkup);
 }
+
+// webformatURL - ссылка на маленькое изображение для списка карточек.
+// largeImageURL - ссылка на большое изображение.
+// tags - строка с описанием изображения. Подойдет для атрибута alt.
+// likes - количество лайков.
+// views - количество просмотров.
+// comments - количество комментариев.
+// downloads - количество загрузок.
