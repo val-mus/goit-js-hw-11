@@ -1,7 +1,10 @@
-const axios = require('axios').default;
+// const axios = require('axios').default;
+import axios from 'axios';
 import Notiflix from 'notiflix';
+
 const BASE_URL = 'https://pixabay.com/api/';
 const ACES_KEY = '30502638-8236fb6cc30a79f817dee13c3';
+
 
 const getEl = element => document.querySelector(element);
 const form = getEl('#search-form');
