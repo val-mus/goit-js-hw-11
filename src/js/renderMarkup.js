@@ -36,6 +36,14 @@ export default function renderMarkup(data) {
     })
     .join('');
   document.querySelector('.gallery').insertAdjacentHTML('beforeend', markup);
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
   lightbox.refresh();
 }
 
