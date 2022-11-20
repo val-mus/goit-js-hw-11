@@ -1,6 +1,5 @@
-
-import axionFetchFromUser from './js/axionFetch';
-import renderMarkup from './js/renderMarkup';
+import axionFetchFromUser from './axionFetch';
+import renderMarkup from './renderMarkup';
 
 const BASE_URL = 'https://pixabay.com/api/';
 const ACES_KEY = '30502638-8236fb6cc30a79f817dee13c3';
@@ -9,7 +8,6 @@ const getEl = element => document.querySelector(element);
 const form = getEl('#search-form');
 
 let searchQuery = '';
-
 
 form.addEventListener('submit', onSubmitClick);
 
@@ -32,8 +30,11 @@ async function onSubmitClick(e) {
 window.addEventListener('scroll', async () => {
   const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
   if (scrollTop === scrollHeight - clientHeight) {
-    const markupData = await axionFetchFromUser(searchQuery, BASE_URL, ACES_KEY);
+    const markupData = await axionFetchFromUser(
+      searchQuery,
+      BASE_URL,
+      ACES_KEY
+    );
     renderMarkup(markupData);
   }
 });
-
