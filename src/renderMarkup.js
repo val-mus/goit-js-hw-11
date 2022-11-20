@@ -36,6 +36,7 @@ export default function renderMarkup(data) {
     })
     .join('');
   document.querySelector('.gallery').insertAdjacentHTML('beforeend', markup);
+  
   const { height: cardHeight } = document
     .querySelector('.gallery')
     .firstElementChild.getBoundingClientRect();
