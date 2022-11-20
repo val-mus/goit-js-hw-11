@@ -33,6 +33,11 @@ button {
     text-align: center;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 .gallery {
 
     display: flex;
@@ -42,35 +47,42 @@ button {
 
     align-items: center;
     justify-content: center;
+ 
    
 }
 
 .photo-card{
 
-    height: 300px;
+
     display: flex;
 
     flex-direction: column;
     padding: 5px;
-
+   
+    box-shadow: 13px -9px 17px -6px rgba(0,0,0,0.68);
    
    
 
 }.info{
-
+    padding: 10px;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+
+ 
+    justify-content: space-between;
     align-items: center;
+    text-decoration: none;
 }
 
 .info-item{
     display: block;
+    text-decoration: none;
+    text-transform: uppercase;
 }
 
 .photo-card__img{
-    height: 70%;
+
+
     width: auto;
     margin-bottom: 10px;
 }

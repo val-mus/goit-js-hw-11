@@ -21,7 +21,8 @@
     "axios": "^1.1.3",
     "modern-normalize": "^1.1.0",
     "notiflix": "^3.2.5",
-    "only-scrollbar": "^0.3.7"
+    "only-scrollbar": "^0.3.7",
+    "simplelightbox": "^2.10.4"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.6.0",

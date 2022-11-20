@@ -1,10 +1,12 @@
-// const axios = require('axios').default;
+const axios = require('axios').default;
 import axios from 'axios';
 import Notiflix from 'notiflix';
 
+// import axionFetchFromUser from './js/axionFetch';
+import renderMarkup from './js/renderMarkup';
+
 const BASE_URL = 'https://pixabay.com/api/';
 const ACES_KEY = '30502638-8236fb6cc30a79f817dee13c3';
-
 
 const getEl = element => document.querySelector(element);
 const form = getEl('#search-form');
@@ -16,77 +18,53 @@ form.addEventListener('submit', onSubmitClick);
 
 async function onSubmitClick(e) {
   e.preventDefault();
-
   document.querySelector('.gallery').innerHTML = '';
+
   searchQuery = e.currentTarget.elements.searchQuery.value;
-  // fetchFromUser(searchQuery);
-  axionFetchFromUser(searchQuery).then(r => renderMarkup(r));
+  const inputField = e.currentTarget.elements.searchQuery;
+  inputField.addEventListener('change', () => {
+    currentPage = 1;
+  });
+
+  const markupData = await axionFetchFromUser(searchQuery);
+  renderMarkup(markupData);
+
   e.target.reset();
-  currentPage = 1;
 }
 
-// function fetchFromUser(searchQuery) {
-//   currentPage += 1;
-//   return axios
-//     .get(`${BASE_URL}`, {
-//       params: {
-//         key: ACES_KEY,
-//         q: `${searchQuery}`,
-//         image_type: 'photo',
-//         orientation: 'horizontal',
-//         safesearch: 'true',
-//         per_page: 50,
-//         page: `${currentPage}`,
-//       },
+// function renderMarkup(data) {
+//   const markup = data
+//     .map(item => {
+//       const {
+//         webformatURL,
+//         tags,
+//         likes,
+//         largeImageURL,
+//         views,
+//         comments,
+//         downloads,
+//       } = item;
+//       return `<div class="photo-card">
+//     <img src="${webformatURL}" alt="${tags}" loading="lazy" class="photo-card__img"/>
+//     <div class="info">
+//     <p class="info-item">
+//         <b>Likes: ${likes} </b>
+//     </p>
+//     <p class="info-item">
+//       <b>Views: ${views}</b>
+//     </p>
+//     <p class="info-item">
+//       <b>Comments: ${comments}</b>
+//     </p>
+//     <p class="info-item">
+//       <b>Downloads: ${downloads}</b>
+//     </p>
+//     </div>
+//     </div>`;
 //     })
-//     .then(response => {
-//       return response.data;
-//     })
-//     .then(result => {
-//       if (result.totalHits === 0) {
-//         Notiflix.Notify.warning('eeerr');
-//       } else {
-//         Notiflix.Notify.info(`"Hooray! We found ${result.totalHits} images." `);
-//       }
-
-//       return result.hits;
-//     })
-//     .then(data => renderMarkup(data));
+//     .join('');
+//   document.querySelector('.gallery').insertAdjacentHTML('beforeend', markup);
 // }
-
-function renderMarkup(data) {
-  const markup = data
-    .map(item => {
-      const {
-        webformatURL,
-        tags,
-        likes,
-        largeImageURL,
-        views,
-        comments,
-        downloads,
-      } = item;
-      return `<div class="photo-card">
-    <img src="${webformatURL}" alt="${tags}" loading="lazy" class="photo-card__img"/>
-    <div class="info">
-    <p class="info-item">
-        <b>Likes: ${likes} </b>
-    </p>
-    <p class="info-item">
-      <b>Views: ${views}</b>
-    </p>
-    <p class="info-item">
-      <b>Comments: ${comments}</b>
-    </p>
-    <p class="info-item">
-      <b>Downloads: ${downloads}</b>
-    </p>
-    </div>
-    </div>`;
-    })
-    .join('');
-  document.querySelector('.gallery').insertAdjacentHTML('beforeend', markup);
-}
 
 window.addEventListener('scroll', async () => {
   const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
@@ -108,12 +86,15 @@ async function axionFetchFromUser(searchQuery) {
         page: `${currentPage}`,
       },
     });
-    const dataCollection = await fetchResponse.data;
-    if (fetchResponse.data.totalHits !== 0) {
-      Notiflix.Notify.info(
-        `"Hooray! We found ${fetchResponse.data.totalHits} images." `
-      );
 
+    const dataCollection = await fetchResponse.data;
+
+    if (fetchResponse.data.totalHits !== 0) {
+      if (currentPage === 1) {
+        Notiflix.Notify.info(
+          `"Hooray! We found ${fetchResponse.data.totalHits} images." `
+        );
+      }
       currentPage += 1;
     } else {
       Notiflix.Notify.warning(
@@ -127,5 +108,6 @@ async function axionFetchFromUser(searchQuery) {
     Notiflix.Notify.warning(
       "We're sorry, but you've reached the end of search results."
     );
+    return;
   }
 }
