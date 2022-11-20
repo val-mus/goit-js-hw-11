@@ -69,7 +69,8 @@ async function onSubmitClick(e) {
 window.addEventListener('scroll', async () => {
   const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
   if (scrollTop === scrollHeight - clientHeight) {
-    axionFetchFromUser(searchQuery).then(r => renderMarkup(r));
+    const markupData = await axionFetchFromUser(searchQuery);
+    renderMarkup(markupData);
   }
 });
 

@@ -41,9 +41,10 @@ export default function renderMarkup(data) {
     .firstElementChild.getBoundingClientRect();
 
   window.scrollBy({
-    top: cardHeight * 2,
+    top: cardHeight * 0.5,
     behavior: 'smooth',
   });
+
   lightbox.refresh();
 }
 
